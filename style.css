@@ -26,13 +26,16 @@ body
 /* DATUM */
 #date
 {
+    position: absolute;
+    top: 10%;
+    left: 0;
     width: 20%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    padding-top: 10%;
 }
+
 .date-weekday,
 .date-day,
 .date-month
@@ -52,4 +55,78 @@ body
 .date-day
 {
     font-size: 3em;
+}
+
+/*Liste*/
+
+#list-container
+{
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    width: 50%;
+    height: 80vh;
+    border: solid 1px black;
+}
+
+/* Liste-Input */
+
+#input-container
+{
+    margin-top: 8%;
+    display: flex;
+    flex-direction: row;
+}
+
+.input
+{
+    width: 85%;
+    height: 50px;
+    padding-left: 25px;
+    border-radius: 25px;
+    border: none;
+    opacity: 100%;
+    background-color: white;
+}
+
+.input:focus
+{
+    opacity: 80%;
+}
+
+/* Add Button */
+
+.add-button
+{
+    margin-left: 7%;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-button:hover
+{
+    cursor: pointer;
+}
+
+.add-button span
+{
+    width: 40px;
+    height: 4px;
+    background-color: rgba(0,35,255,1);
+    border-radius: 4px;
+}
+
+.add-button span:nth-child(1)
+{
+    transform: translateX(13px);
+}
+
+.add-button span:nth-child(2)
+{
+    transform: rotate(90deg) translateY(12px);
 }
