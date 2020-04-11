@@ -18,3 +18,14 @@ window.addEventListener("load",
         DOMMonth.textContent = monthList[month];
         DOMWeekDay.textContent = weekdayList[weekday];
     });
+
+
+//INPUT + TO DO LISTE
+
+const DOMInput = document.getElementById("listinput");
+const DOMList = document.querySelector(".list");
+const DOMButton = document.querySelector(".add-button");
+
+let getInput = (<HTMLInputElement>document.getElementById("listinput")).value;
+
+console.log(getInput);

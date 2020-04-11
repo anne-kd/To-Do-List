@@ -14,3 +14,9 @@ window.addEventListener("load", function updateDate() {
     DOMMonth.textContent = monthList[month];
     DOMWeekDay.textContent = weekdayList[weekday];
 });
+//INPUT + TO DO LISTE
+var DOMInput = document.getElementById("listinput");
+var DOMList = document.querySelector(".list");
+var DOMButton = document.querySelector(".add-button");
+var getInput = document.getElementById("listinput").value;
+console.log(getInput);
