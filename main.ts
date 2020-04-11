@@ -44,7 +44,7 @@ function addTask(){
         <div class="pause"></div>
         <div class="time"> <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span></div>
     </div>
-    <div class="remove-task"> <span></span> <span></span> </div>
+    <div class="remove-task" onclick="removeTask(event)"> <span></span> <span></span> </div>
     </li>`;
 
     let replacement = html.replace('%text%', getInput);
@@ -60,7 +60,7 @@ DOMInput.addEventListener("keyup", function(event) {
      addTask();
     }
   });
-
+//ABHAKEN
 function check(event){
     if (event.target.classList.contains('checked')) {
         event.target.classList.remove('checked');
@@ -69,4 +69,9 @@ function check(event){
         event.target.classList.add('checked');
         event.target.nextElementSibling.classList.add('line');
     }
+}
+
+//LOESCHEN
+function removeTask(event) {
+    event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
 }
