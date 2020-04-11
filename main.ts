@@ -35,10 +35,9 @@ function remInput(){
 
 function addTask(){
     let getInput = DOMInput.value;
-    a++;
 
-    let html = `<li class="task" id="task-%id%" >
-    <div class="checkbox" onClick="checked($event)"></div>
+    let html = `<li class="task">
+    <div class="checkbox" onclick="check(event)"></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
         <div class="play"></div>
@@ -49,7 +48,6 @@ function addTask(){
     </li>`;
 
     let replacement = html.replace('%text%', getInput);
-    replacement = replacement.replace('%id%', `${a}`);
     DOMList.insertAdjacentHTML("afterbegin", replacement);
 
     remInput();
@@ -63,17 +61,12 @@ DOMInput.addEventListener("keyup", function(event) {
     }
   });
 
-
-// Abhaken
-
-// const DOMCheck = document.querySelectorAll('.checkbox');
-
-// DOMCheck.forEach(element => {
-//      element.addEventListener('click', function(){
-//          this.classList.add('checked');
-//     });
-// });
-
-function checked($event){
-    this.classList.add('checked');
+function check(event){
+    if (event.target.classList.contains('checked')) {
+        event.target.classList.remove('checked');
+        event.target.nextElementSibling.classList.remove('line');
+    } else {
+        event.target.classList.add('checked');
+        event.target.nextElementSibling.classList.add('line');
+    }
 }

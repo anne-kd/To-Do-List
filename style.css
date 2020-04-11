@@ -177,7 +177,10 @@ body
     color: white;
     font-size: 1em;
 }
-
+.line {
+    text-decoration: line-through;
+    color: grey;
+}
 .remove-task
 {
     width: 20px;
