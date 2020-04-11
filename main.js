@@ -18,5 +18,14 @@ window.addEventListener("load", function updateDate() {
 var DOMInput = document.getElementById("listinput");
 var DOMList = document.querySelector(".list");
 var DOMButton = document.querySelector(".add-button");
-var getInput = document.getElementById("listinput").value;
-console.log(getInput);
+function remInput() {
+    return DOMInput.value = "";
+}
+function addTask() {
+    var getInput = DOMInput.value;
+    var html = "<li class=\"task\">\n    <div class=\"checkbox\"></div>\n    <div class=\"task-text\"> %text% </div>\n    <div class=\"timer\">\n        <div class=\"play\"></div>\n        <div class=\"pause\"></div>\n        <div class=\"time\"> <span class=\"hour\">00</span>:<span class=\"min\">00</span>:<span class=\"sec\">00</span></div>\n    </div>\n    <div class=\"remove-task\"> <span></span> <span></span> </div>\n    </li>";
+    var replacement = html.replace('%text%', getInput);
+    DOMList.insertAdjacentHTML("afterbegin", replacement);
+    remInput();
+}
+DOMButton.addEventListener('click', addTask);

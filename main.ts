@@ -22,10 +22,34 @@ window.addEventListener("load",
 
 //INPUT + TO DO LISTE
 
-const DOMInput = document.getElementById("listinput");
+const DOMInput = (<HTMLInputElement>document.getElementById("listinput"));
 const DOMList = document.querySelector(".list");
 const DOMButton = document.querySelector(".add-button");
 
-let getInput = (<HTMLInputElement>document.getElementById("listinput")).value;
 
-console.log(getInput);
+
+function remInput(){
+    return DOMInput.value = "";
+}
+
+function addTask(){
+    let getInput = DOMInput.value;
+    
+    let html = `<li class="task">
+    <div class="checkbox"></div>
+    <div class="task-text"> %text% </div>
+    <div class="timer">
+        <div class="play"></div>
+        <div class="pause"></div>
+        <div class="time"> <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span></div>
+    </div>
+    <div class="remove-task"> <span></span> <span></span> </div>
+    </li>`;
+
+    let replacement = html.replace('%text%', getInput);
+    DOMList.insertAdjacentHTML("afterbegin", replacement);
+
+    remInput();
+}
+
+DOMButton.addEventListener('click', addTask);
