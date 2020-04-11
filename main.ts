@@ -25,6 +25,7 @@ window.addEventListener("load",
 const DOMInput = (<HTMLInputElement>document.getElementById("listinput"));
 const DOMList = document.querySelector(".list");
 const DOMButton = document.querySelector(".add-button");
+let a = 0;
 
 
 
@@ -34,9 +35,10 @@ function remInput(){
 
 function addTask(){
     let getInput = DOMInput.value;
-    
-    let html = `<li class="task" >
-    <div class="checkbox"></div>
+    a++;
+
+    let html = `<li class="task" id="task-%id%" >
+    <div class="checkbox" onClick="checked($event)"></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
         <div class="play"></div>
@@ -47,6 +49,7 @@ function addTask(){
     </li>`;
 
     let replacement = html.replace('%text%', getInput);
+    replacement = replacement.replace('%id%', `${a}`);
     DOMList.insertAdjacentHTML("afterbegin", replacement);
 
     remInput();
@@ -63,11 +66,14 @@ DOMInput.addEventListener("keyup", function(event) {
 
 // Abhaken
 
-const DOMCheck = document.querySelectorAll('.checkbox');
+// const DOMCheck = document.querySelectorAll('.checkbox');
 
-DOMCheck.forEach(element => {
-     element.addEventListener('click', function(){
-         element.toggleAttribute('checked');
-    });
-});
+// DOMCheck.forEach(element => {
+//      element.addEventListener('click', function(){
+//          this.classList.add('checked');
+//     });
+// });
 
+function checked($event){
+    this.classList.add('checked');
+}
