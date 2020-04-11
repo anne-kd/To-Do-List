@@ -35,21 +35,22 @@ function remInput(){
 
 function addTask(){
     let getInput = DOMInput.value;
+    a++;
 
     let html = `<li class="task">
     <div class="checkbox" onclick="check(event)"><span></span></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
-        <div class="play"></div>
-        <div class="pause"></div>
-        <div class="time"> <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span></div>
+        <div class="play" onclick="start(event)" ></div>
+        <div class="pause" onclick="pause(event)" ></div>
+        <div class="time" id="%id%">  </div>
     </div>
     <div class="remove-task" onclick="removeTask(event)"> <span></span> <span></span> </div>
     </li>`;
-
-    let replacement = html.replace('%text%', getInput);
-    DOMList.insertAdjacentHTML("afterbegin", replacement);
-
+    html = html.replace('%text%', getInput);
+    html = html.replace('%id%', `${a}`);
+    DOMList.insertAdjacentHTML("afterbegin", html);
+    
     remInput();
 }
 
@@ -75,3 +76,55 @@ function check(event){
 function removeTask(event) {
     event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
 }
+
+// TIMER
+let stop= 1;
+let hour= 0;
+let min = 0;
+let sec = 0;
+let id;
+
+
+
+function start(event) {
+    stop = 0;
+    let sib1 = event.target.nextElementSibling;
+    let sib2 = sib1.nextElementSibling;
+    id = sib2.getAttribute("id");
+    return id;
+}
+
+function pause(event) {
+    stop = 1;
+}
+
+function timer(){
+    if(stop === 0){
+        sec++;
+        if (sec === 60){
+            min++;
+            sec = 0; 
+        }
+        if (min === 60){
+            hour++;
+            min = 0;
+        }
+        if (hour === 24){
+            hour = 0;
+        }
+    clearHTML(id);
+    insertHTML(id);
+    }
+}
+
+function clearHTML(id){
+    document.getElementById(id).innerHTML = "";
+}
+
+function insertHTML(id){
+    let code = `<span class="hour">${hour}</span>:<span class="min">${min}</span>:<span class="sec">${sec}</span>`;
+    document.getElementById(id).innerHTML = `${code}`;
+}
+
+
+setInterval(timer, 1000);
