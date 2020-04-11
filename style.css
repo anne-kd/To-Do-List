@@ -167,7 +167,9 @@ body
     background-color: white;
     cursor: pointer;
 }
-
+.checked {
+    background-color: black;
+}
 .task-text
 {
     padding-left: 5%;

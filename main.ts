@@ -35,7 +35,7 @@ function remInput(){
 function addTask(){
     let getInput = DOMInput.value;
     
-    let html = `<li class="task">
+    let html = `<li class="task" >
     <div class="checkbox"></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
@@ -59,3 +59,15 @@ DOMInput.addEventListener("keyup", function(event) {
      addTask();
     }
   });
+
+
+// Abhaken
+
+const DOMCheck = document.querySelectorAll('.checkbox');
+
+DOMCheck.forEach(element => {
+     element.addEventListener('click', function(){
+         element.toggleAttribute('checked');
+    });
+});
+

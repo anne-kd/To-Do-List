@@ -23,7 +23,7 @@ function remInput() {
 }
 function addTask() {
     var getInput = DOMInput.value;
-    var html = "<li class=\"task\">\n    <div class=\"checkbox\"></div>\n    <div class=\"task-text\"> %text% </div>\n    <div class=\"timer\">\n        <div class=\"play\"></div>\n        <div class=\"pause\"></div>\n        <div class=\"time\"> <span class=\"hour\">00</span>:<span class=\"min\">00</span>:<span class=\"sec\">00</span></div>\n    </div>\n    <div class=\"remove-task\"> <span></span> <span></span> </div>\n    </li>";
+    var html = "<li class=\"task\" >\n    <div class=\"checkbox\"></div>\n    <div class=\"task-text\"> %text% </div>\n    <div class=\"timer\">\n        <div class=\"play\"></div>\n        <div class=\"pause\"></div>\n        <div class=\"time\"> <span class=\"hour\">00</span>:<span class=\"min\">00</span>:<span class=\"sec\">00</span></div>\n    </div>\n    <div class=\"remove-task\"> <span></span> <span></span> </div>\n    </li>";
     var replacement = html.replace('%text%', getInput);
     DOMList.insertAdjacentHTML("afterbegin", replacement);
     remInput();
@@ -34,4 +34,11 @@ DOMInput.addEventListener("keyup", function (event) {
         event.preventDefault();
         addTask();
     }
+});
+// Abhaken
+var DOMCheck = document.querySelectorAll('.checkbox');
+DOMCheck.forEach(function (element) {
+    element.addEventListener('click', function () {
+        element.toggleAttribute('checked');
+    });
 });
