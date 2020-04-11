@@ -37,7 +37,7 @@ function addTask(){
     let getInput = DOMInput.value;
 
     let html = `<li class="task">
-    <div class="checkbox" onclick="check(event)"></div>
+    <div class="checkbox" onclick="check(event)"><span></span></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
         <div class="play"></div>

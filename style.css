@@ -167,9 +167,15 @@ body
     background-color: white;
     cursor: pointer;
 }
-.checked {
-    background-color: black;
+.checked span 
+{
+    display: block;
+    width: 20px;
+    height: 4px;
+    margin-top: 40%;
+    background-color:rgba(0,35,255,1);
 }
+
 .task-text
 {
     padding-left: 5%;
@@ -195,6 +201,7 @@ body
     height: 4px;
     border-radius: 4px;
     background-color: white;
+    cursor: pointer;
 }
 .remove-task span:nth-child(1)
 {
