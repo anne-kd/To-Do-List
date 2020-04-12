@@ -83,22 +83,47 @@ let hour= 0;
 let min = 0;
 let sec = 0;
 let id;
+let idArray: Array<String> = ['0'];
 
-
-
-function start(event) {
+function start(event) : string {
     stop = 0;
-    let sib1 = event.target.nextElementSibling;
-    let sib2 = sib1.nextElementSibling;
-    id = sib2.getAttribute("id");
+    let DOMPause = event.target.nextElementSibling;
+    let DOMTimer = DOMPause.nextElementSibling;
+    id = DOMTimer.getAttribute("id");
+
+    if (idArray.some(el => el === id)){
+        setTime(DOMTimer);
+    }
+    else {
+        hour = 0;
+        min = 0;
+        sec = 0;
+        idArray.push(id);
+    }
+    
     return id;
 }
 
-function pause(event) {
+function setTime(p_DOMTimer) {
+    let hourTag = p_DOMTimer.firstElementChild;
+    let minTag = hourTag.nextElementSibling;
+    let secTag = minTag.nextElementSibling;
+
+    let hourText = hourTag.innerHTML;
+    let minText = minTag.innerHTML;
+    let secText = secTag.innerHTML;
+
+    hour = parseFloat(hourText);
+    min = parseFloat(minText);
+    sec = parseFloat(secText);
+}
+
+
+function pause(event) : void {
     stop = 1;
 }
 
-function timer(){
+function timer(): void{
     if(stop === 0){
         sec++;
         if (sec === 60){
@@ -117,13 +142,13 @@ function timer(){
     }
 }
 
-function clearHTML(id){
-    document.getElementById(id).innerHTML = "";
+function clearHTML(p_id) : void{
+    document.getElementById(p_id).innerHTML = "";
 }
 
-function insertHTML(id){
+function insertHTML(p_id) : void {
     let code = `<span class="hour">${hour}</span>:<span class="min">${min}</span>:<span class="sec">${sec}</span>`;
-    document.getElementById(id).innerHTML = `${code}`;
+    document.getElementById(p_id).innerHTML = `${code}`;
 }
 
 

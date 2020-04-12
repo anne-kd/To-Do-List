@@ -59,12 +59,33 @@ var hour = 0;
 var min = 0;
 var sec = 0;
 var id;
+var idArray = ['0'];
 function start(event) {
     stop = 0;
-    var sib1 = event.target.nextElementSibling;
-    var sib2 = sib1.nextElementSibling;
-    id = sib2.getAttribute("id");
+    var DOMPause = event.target.nextElementSibling;
+    var DOMTimer = DOMPause.nextElementSibling;
+    id = DOMTimer.getAttribute("id");
+    if (idArray.some(function (el) { return el === id; })) {
+        setTime(DOMTimer);
+    }
+    else {
+        hour = 0;
+        min = 0;
+        sec = 0;
+        idArray.push(id);
+    }
     return id;
+}
+function setTime(p_DOMTimer) {
+    var hourTag = p_DOMTimer.firstElementChild;
+    var minTag = hourTag.nextElementSibling;
+    var secTag = minTag.nextElementSibling;
+    var hourText = hourTag.innerHTML;
+    var minText = minTag.innerHTML;
+    var secText = secTag.innerHTML;
+    hour = parseFloat(hourText);
+    min = parseFloat(minText);
+    sec = parseFloat(secText);
 }
 function pause(event) {
     stop = 1;
@@ -87,11 +108,11 @@ function timer() {
         insertHTML(id);
     }
 }
-function clearHTML(id) {
-    document.getElementById(id).innerHTML = "";
+function clearHTML(p_id) {
+    document.getElementById(p_id).innerHTML = "";
 }
-function insertHTML(id) {
+function insertHTML(p_id) {
     var code = "<span class=\"hour\">" + hour + "</span>:<span class=\"min\">" + min + "</span>:<span class=\"sec\">" + sec + "</span>";
-    document.getElementById(id).innerHTML = "" + code;
+    document.getElementById(p_id).innerHTML = "" + code;
 }
 setInterval(timer, 1000);
