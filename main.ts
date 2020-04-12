@@ -35,21 +35,22 @@ function remInput(){
 
 function addTask(){
     let getInput = DOMInput.value;
+    a++;
 
     let html = `<li class="task">
     <div class="checkbox" onclick="check(event)"><span></span></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
-        <div class="play"></div>
-        <div class="pause"></div>
-        <div class="time"> <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span></div>
+        <div class="play" onclick="start(event)" ></div>
+        <div class="pause" onclick="pause(event)" ></div>
+        <div class="time" id="%id%">  </div>
     </div>
     <div class="remove-task" onclick="removeTask(event)"> <span></span> <span></span> </div>
     </li>`;
-
-    let replacement = html.replace('%text%', getInput);
-    DOMList.insertAdjacentHTML("afterbegin", replacement);
-
+    html = html.replace('%text%', getInput);
+    html = html.replace('%id%', `${a}`);
+    DOMList.insertAdjacentHTML("afterbegin", html);
+    
     remInput();
 }
 
@@ -75,3 +76,80 @@ function check(event){
 function removeTask(event) {
     event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
 }
+
+// TIMER
+let stop= 1;
+let hour= 0;
+let min = 0;
+let sec = 0;
+let id;
+let idArray: Array<String> = ['0'];
+
+function start(event) : string {
+    stop = 0;
+    let DOMPause = event.target.nextElementSibling;
+    let DOMTimer = DOMPause.nextElementSibling;
+    id = DOMTimer.getAttribute("id");
+
+    if (idArray.some(el => el === id)){
+        setTime(DOMTimer);
+    }
+    else {
+        hour = 0;
+        min = 0;
+        sec = 0;
+        idArray.push(id);
+    }
+    
+    return id;
+}
+
+function setTime(p_DOMTimer) {
+    let hourTag = p_DOMTimer.firstElementChild;
+    let minTag = hourTag.nextElementSibling;
+    let secTag = minTag.nextElementSibling;
+
+    let hourText = hourTag.innerHTML;
+    let minText = minTag.innerHTML;
+    let secText = secTag.innerHTML;
+
+    hour = parseFloat(hourText);
+    min = parseFloat(minText);
+    sec = parseFloat(secText);
+}
+
+
+function pause(event) : void {
+    stop = 1;
+}
+
+function timer(): void{
+    if(stop === 0){
+        sec++;
+        if (sec === 60){
+            min++;
+            sec = 0; 
+        }
+        if (min === 60){
+            hour++;
+            min = 0;
+        }
+        if (hour === 24){
+            hour = 0;
+        }
+    clearHTML(id);
+    insertHTML(id);
+    }
+}
+
+function clearHTML(p_id) : void{
+    document.getElementById(p_id).innerHTML = "";
+}
+
+function insertHTML(p_id) : void {
+    let code = `<span class="hour">${hour}</span>:<span class="min">${min}</span>:<span class="sec">${sec}</span>`;
+    document.getElementById(p_id).innerHTML = `${code}`;
+}
+
+
+setInterval(timer, 1000);
