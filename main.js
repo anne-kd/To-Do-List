@@ -60,11 +60,19 @@ var min = 0;
 var sec = 0;
 var id;
 var idArray = ['0'];
+function pause(event) {
+    var DOMPause = event.target;
+    var DOMStart = DOMPause.previousElementSibling;
+    stop = 1;
+    styleTagReverse(DOMPause, DOMStart);
+}
 function start(event) {
     stop = 0;
-    var DOMPause = event.target.nextElementSibling;
+    var DOMStart = event.target;
+    var DOMPause = DOMStart.nextElementSibling;
     var DOMTimer = DOMPause.nextElementSibling;
     id = DOMTimer.getAttribute("id");
+    styleTag(DOMStart, DOMPause);
     if (idArray.some(function (el) { return el === id; })) {
         setTime(DOMTimer);
     }
@@ -76,6 +84,14 @@ function start(event) {
     }
     return id;
 }
+function styleTag(p_DOMStart, p_DOMPause) {
+    p_DOMStart.style.display = "none";
+    p_DOMPause.style.display = "block";
+}
+function styleTagReverse(p_DOMPause, p_DOMStart) {
+    p_DOMStart.style.display = "block";
+    p_DOMPause.style.display = "none";
+}
 function setTime(p_DOMTimer) {
     var hourTag = p_DOMTimer.firstElementChild;
     var minTag = hourTag.nextElementSibling;
@@ -86,9 +102,6 @@ function setTime(p_DOMTimer) {
     hour = parseFloat(hourText);
     min = parseFloat(minText);
     sec = parseFloat(secText);
-}
-function pause(event) {
-    stop = 1;
 }
 function timer() {
     if (stop === 0) {

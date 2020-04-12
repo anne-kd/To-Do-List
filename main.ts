@@ -85,12 +85,21 @@ let sec = 0;
 let id;
 let idArray: Array<String> = ['0'];
 
+
+function pause(event) : void {
+    let DOMPause = event.target;
+    let DOMStart = DOMPause.previousElementSibling;
+    stop = 1;
+    styleTagReverse(DOMPause, DOMStart);
+}
+
 function start(event) : string {
     stop = 0;
-    let DOMPause = event.target.nextElementSibling;
+    let DOMStart = event.target;
+    let DOMPause = DOMStart.nextElementSibling;
     let DOMTimer = DOMPause.nextElementSibling;
     id = DOMTimer.getAttribute("id");
-
+    styleTag(DOMStart, DOMPause);
     if (idArray.some(el => el === id)){
         setTime(DOMTimer);
     }
@@ -102,6 +111,15 @@ function start(event) : string {
     }
     
     return id;
+}
+
+function styleTag(p_DOMStart, p_DOMPause){
+    p_DOMStart.style.display = "none";
+    p_DOMPause.style.display = "block";
+}
+function styleTagReverse(p_DOMPause, p_DOMStart){
+    p_DOMStart.style.display = "block";
+    p_DOMPause.style.display = "none";
 }
 
 function setTime(p_DOMTimer) {
@@ -118,10 +136,6 @@ function setTime(p_DOMTimer) {
     sec = parseFloat(secText);
 }
 
-
-function pause(event) : void {
-    stop = 1;
-}
 
 function timer(): void{
     if(stop === 0){

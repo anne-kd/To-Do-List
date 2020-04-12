@@ -192,6 +192,7 @@ body
     width: 20px;
     height: 20px;
     margin-left: 40px;
+    cursor: pointer;
 }
 
 .remove-task span
@@ -201,7 +202,6 @@ body
     height: 4px;
     border-radius: 4px;
     background-color: white;
-    cursor: pointer;
 }
 .remove-task span:nth-child(1)
 {
@@ -222,6 +222,7 @@ body
 
 .play
 {
+    display: block;
     cursor: pointer;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
@@ -230,6 +231,7 @@ body
 }
 .pause
 {
+    display: none;
     margin-left: 10px;
     width:5px;
     height: 20px;
