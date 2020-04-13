@@ -25,15 +25,16 @@ window.addEventListener("load",
 const DOMInput = (<HTMLInputElement>document.getElementById("listinput"));
 const DOMList = document.querySelector(".list");
 const DOMButton = document.querySelector(".add-button");
+
 let a = 0;
 
 
 
-function remInput(){
+function remInput() : string{
     return DOMInput.value = "";
 }
 
-function addTask(){
+function addTask() : void{
     let getInput = DOMInput.value;
     a++;
 
@@ -55,14 +56,15 @@ function addTask(){
 }
 
 DOMButton.addEventListener('click', addTask);
-DOMInput.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) {
-     event.preventDefault();
-     addTask();
-    }
-  });
+DOMInput.addEventListener("keyup", 
+    function(event) : void {
+        if (event.keyCode === 13) {
+        event.preventDefault();
+        addTask();
+        }
+    });
 //ABHAKEN
-function check(event){
+function check(event) : void {
     if (event.target.classList.contains('checked')) {
         event.target.classList.remove('checked');
         event.target.nextElementSibling.classList.remove('line');
@@ -73,15 +75,19 @@ function check(event){
 }
 
 //LOESCHEN
-function removeTask(event) {
+function removeTask(event) : void {
     event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
 }
 
 // TIMER
-let stop= 1;
-let hour= 0;
-let min = 0;
-let sec = 0;
+interface ITimer {
+    stop: number;
+    hour: number;
+    min: number;
+    sec: number;
+    id?: string;
+} 
+let newTimer : ITimer = {stop: 1, hour: 0, min: 0, sec: 0};
 let id;
 let idArray: Array<String> = ['0'];
 
@@ -89,12 +95,12 @@ let idArray: Array<String> = ['0'];
 function pause(event) : void {
     let DOMPause = event.target;
     let DOMStart = DOMPause.previousElementSibling;
-    stop = 1;
+    newTimer.stop = 1;
     styleTagReverse(DOMPause, DOMStart);
 }
 
 function start(event) : string {
-    stop = 0;
+    newTimer.stop = 0;
     let DOMStart = event.target;
     let DOMPause = DOMStart.nextElementSibling;
     let DOMTimer = DOMPause.nextElementSibling;
@@ -104,52 +110,48 @@ function start(event) : string {
         setTime(DOMTimer);
     }
     else {
-        hour = 0;
-        min = 0;
-        sec = 0;
+        newTimer.hour = 0;
+        newTimer.min = 0;
+        newTimer.sec = 0;
         idArray.push(id);
     }
     
     return id;
 }
 
-function styleTag(p_DOMStart, p_DOMPause){
+function styleTag(p_DOMStart, p_DOMPause) : void {
     p_DOMStart.style.display = "none";
     p_DOMPause.style.display = "block";
 }
-function styleTagReverse(p_DOMPause, p_DOMStart){
+function styleTagReverse(p_DOMPause, p_DOMStart) : void {
     p_DOMStart.style.display = "block";
     p_DOMPause.style.display = "none";
 }
 
-function setTime(p_DOMTimer) {
+function setTime(p_DOMTimer) : void {
     let hourTag = p_DOMTimer.firstElementChild;
     let minTag = hourTag.nextElementSibling;
     let secTag = minTag.nextElementSibling;
 
-    let hourText = hourTag.innerHTML;
-    let minText = minTag.innerHTML;
-    let secText = secTag.innerHTML;
-
-    hour = parseFloat(hourText);
-    min = parseFloat(minText);
-    sec = parseFloat(secText);
+    newTimer.hour = parseFloat(hourTag.innerHTML);
+    newTimer.min = parseFloat(minTag.innerHTML);
+    newTimer.sec = parseFloat(secTag.innerHTML);
 }
 
 
 function timer(): void{
-    if(stop === 0){
-        sec++;
-        if (sec === 60){
-            min++;
-            sec = 0; 
+    if(newTimer.stop === 0){
+        newTimer.sec++;
+        if (newTimer.sec === 60){
+            newTimer.min++;
+            newTimer.sec = 0; 
         }
-        if (min === 60){
-            hour++;
-            min = 0;
+        if (newTimer.min === 60){
+            newTimer.hour++;
+            newTimer.min = 0;
         }
-        if (hour === 24){
-            hour = 0;
+        if (newTimer.hour === 24){
+            newTimer.hour = 0;
         }
     clearHTML(id);
     insertHTML(id);
@@ -161,7 +163,7 @@ function clearHTML(p_id) : void{
 }
 
 function insertHTML(p_id) : void {
-    let code = `<span class="hour">${hour}</span>:<span class="min">${min}</span>:<span class="sec">${sec}</span>`;
+    let code = `<span class="hour">${newTimer.hour}</span>:<span class="min">${newTimer.min}</span>:<span class="sec">${newTimer.sec}</span>`;
     document.getElementById(p_id).innerHTML = `${code}`;
 }
 

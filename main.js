@@ -53,21 +53,17 @@ function check(event) {
 function removeTask(event) {
     event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
 }
-// TIMER
-var stop = 1;
-var hour = 0;
-var min = 0;
-var sec = 0;
+var newTimer = { stop: 1, hour: 0, min: 0, sec: 0 };
 var id;
 var idArray = ['0'];
 function pause(event) {
     var DOMPause = event.target;
     var DOMStart = DOMPause.previousElementSibling;
-    stop = 1;
+    newTimer.stop = 1;
     styleTagReverse(DOMPause, DOMStart);
 }
 function start(event) {
-    stop = 0;
+    newTimer.stop = 0;
     var DOMStart = event.target;
     var DOMPause = DOMStart.nextElementSibling;
     var DOMTimer = DOMPause.nextElementSibling;
@@ -77,9 +73,9 @@ function start(event) {
         setTime(DOMTimer);
     }
     else {
-        hour = 0;
-        min = 0;
-        sec = 0;
+        newTimer.hour = 0;
+        newTimer.min = 0;
+        newTimer.sec = 0;
         idArray.push(id);
     }
     return id;
@@ -99,23 +95,23 @@ function setTime(p_DOMTimer) {
     var hourText = hourTag.innerHTML;
     var minText = minTag.innerHTML;
     var secText = secTag.innerHTML;
-    hour = parseFloat(hourText);
-    min = parseFloat(minText);
-    sec = parseFloat(secText);
+    newTimer.hour = parseFloat(hourText);
+    newTimer.min = parseFloat(minText);
+    newTimer.sec = parseFloat(secText);
 }
 function timer() {
-    if (stop === 0) {
-        sec++;
-        if (sec === 60) {
-            min++;
-            sec = 0;
+    if (newTimer.stop === 0) {
+        newTimer.sec++;
+        if (newTimer.sec === 60) {
+            newTimer.min++;
+            newTimer.sec = 0;
         }
-        if (min === 60) {
-            hour++;
-            min = 0;
+        if (newTimer.min === 60) {
+            newTimer.hour++;
+            newTimer.min = 0;
         }
-        if (hour === 24) {
-            hour = 0;
+        if (newTimer.hour === 24) {
+            newTimer.hour = 0;
         }
         clearHTML(id);
         insertHTML(id);
@@ -125,7 +121,7 @@ function clearHTML(p_id) {
     document.getElementById(p_id).innerHTML = "";
 }
 function insertHTML(p_id) {
-    var code = "<span class=\"hour\">" + hour + "</span>:<span class=\"min\">" + min + "</span>:<span class=\"sec\">" + sec + "</span>";
+    var code = "<span class=\"hour\">" + newTimer.hour + "</span>:<span class=\"min\">" + newTimer.min + "</span>:<span class=\"sec\">" + newTimer.sec + "</span>";
     document.getElementById(p_id).innerHTML = "" + code;
 }
 setInterval(timer, 1000);
