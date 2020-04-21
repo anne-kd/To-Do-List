@@ -40,18 +40,21 @@ DOMInput.addEventListener("keyup", function (event) {
 });
 //ABHAKEN
 function check(event) {
-    if (event.target.classList.contains('checked')) {
-        event.target.classList.remove('checked');
-        event.target.nextElementSibling.classList.remove('line');
+    var box = event.target;
+    if (box.classList.contains('checked')) {
+        box.classList.remove('checked');
+        box.nextElementSibling.classList.remove('line');
     }
     else {
-        event.target.classList.add('checked');
-        event.target.nextElementSibling.classList.add('line');
+        box.classList.add('checked');
+        box.nextElementSibling.classList.add('line');
     }
 }
 //LOESCHEN
 function removeTask(event) {
-    event.target.parentNode.parentNode.parentNode.removeChild(event.target.parentNode.parentNode);
+    var rem = event.target;
+    rem.parentNode.parentNode.parentNode.removeChild(rem.parentNode.parentNode);
+    //sorry xD
 }
 var newTimer = { stop: 1, hour: 0, min: 0, sec: 0 };
 var id;
@@ -89,15 +92,12 @@ function styleTagReverse(p_DOMPause, p_DOMStart) {
     p_DOMPause.style.display = "none";
 }
 function setTime(p_DOMTimer) {
-    var hourTag = p_DOMTimer.firstElementChild;
-    var minTag = hourTag.nextElementSibling;
-    var secTag = minTag.nextElementSibling;
-    var hourText = hourTag.innerHTML;
-    var minText = minTag.innerHTML;
-    var secText = secTag.innerHTML;
-    newTimer.hour = parseFloat(hourText);
-    newTimer.min = parseFloat(minText);
-    newTimer.sec = parseFloat(secText);
+    var hourTag = p_DOMTimer.querySelector(".hour");
+    var minTag = p_DOMTimer.querySelector(".min");
+    var secTag = p_DOMTimer.querySelector(".sec");
+    newTimer.hour = parseFloat(hourTag.innerHTML);
+    newTimer.min = parseFloat(minTag.innerHTML);
+    newTimer.sec = parseFloat(secTag.innerHTML);
 }
 function timer() {
     if (newTimer.stop === 0) {
