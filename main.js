@@ -30,6 +30,10 @@ function addTask() {
     html = html.replace('%id%', "" + a);
     DOMList.insertAdjacentHTML("afterbegin", html);
     remInput();
+    var DOMText = document.querySelectorAll(".task-text");
+    DOMText.forEach(function (element) {
+        element.addEventListener("click", getOutput);
+    });
 }
 DOMButton.addEventListener('click', addTask);
 DOMInput.addEventListener("keyup", function (event) {
@@ -125,3 +129,15 @@ function insertHTML(p_id) {
     document.getElementById(p_id).innerHTML = "" + code;
 }
 setInterval(timer, 1000);
+function getOutput(event) {
+    var element = event.target;
+    var task = element.innerHTML;
+    console.log(task);
+    var output = new SpeechSynthesisUtterance("Heute stehen noch folgende Aufgaben an " + task);
+    output.lang = "de-DE";
+    speaker(output);
+}
+// Speak text
+function speaker(p_output) {
+    speechSynthesis.speak(p_output);
+}

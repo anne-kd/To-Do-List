@@ -53,6 +53,12 @@ function addTask() : void{
     DOMList.insertAdjacentHTML("afterbegin", html);
     
     remInput();
+
+
+    let DOMText = document.querySelectorAll<HTMLElement>(".task-text");
+    DOMText.forEach((element) => {
+    element.addEventListener("click", getOutput);
+    });
 }
 
 DOMButton.addEventListener('click', addTask);
@@ -63,6 +69,24 @@ DOMInput.addEventListener("keyup",
         addTask();
         }
     });
+// VORLESEN
+function getOutput(event: Event) {
+    const element = event.target as HTMLElement;
+    let task = element.innerHTML;
+    console.log(task);
+    let output = new SpeechSynthesisUtterance(
+      `Heute stehen noch folgende Aufgaben an ${task}`
+    );
+    output.lang = "de-DE";
+    speaker(output);
+  }
+  
+  // Speak text
+  function speaker(p_output: any) {
+    speechSynthesis.speak(p_output);
+  }
+  
+
 //ABHAKEN
 function check(event : Event) : void {
     let box = event.target as HTMLElement;
