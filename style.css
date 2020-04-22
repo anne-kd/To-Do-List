@@ -244,3 +244,11 @@ body
     color: white;
     margin-left: 20px;
 }
+
+#read {
+    margin-top: 5%;
+}
+#read p {
+    color: white;
+    cursor: pointer;
+}

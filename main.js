@@ -30,10 +30,8 @@ function addTask() {
     html = html.replace('%id%', "" + a);
     DOMList.insertAdjacentHTML("afterbegin", html);
     remInput();
-    var DOMText = document.querySelectorAll(".task-text");
-    DOMText.forEach(function (element) {
-        element.addEventListener("click", getOutput);
-    });
+    var DOMRead = document.querySelector("#read");
+    DOMRead.addEventListener("click", getOutput);
 }
 DOMButton.addEventListener('click', addTask);
 DOMInput.addEventListener("keyup", function (event) {
@@ -42,6 +40,37 @@ DOMInput.addEventListener("keyup", function (event) {
         addTask();
     }
 });
+// VORLESEN
+function getOutput(event) {
+    var tasks = document.querySelectorAll(".task-text");
+    if (tasks.length == 0) {
+        var output = new SpeechSynthesisUtterance("F\u00FCr heute stehen keine Aufgaben an.");
+        output.lang = "de-DE";
+        output.pitch = 5;
+        speaker(output);
+    }
+    for (var i = 0; i < tasks.length; i++) {
+        var element = tasks[i];
+        var task = element.innerHTML;
+        var output = void 0;
+        if (element.classList.contains('line')) {
+            task = "";
+        }
+        if (i == 0) {
+            output = new SpeechSynthesisUtterance("Heute stehen noch folgende Aufgaben an: " + task);
+        }
+        else {
+            output = new SpeechSynthesisUtterance("" + task);
+        }
+        output.lang = "de-DE";
+        output.pitch = 5;
+        speaker(output);
+    }
+}
+// Speak text
+function speaker(p_output) {
+    speechSynthesis.speak(p_output);
+}
 //ABHAKEN
 function check(event) {
     var box = event.target;
@@ -129,15 +158,3 @@ function insertHTML(p_id) {
     document.getElementById(p_id).innerHTML = "" + code;
 }
 setInterval(timer, 1000);
-function getOutput(event) {
-    var element = event.target;
-    var task = element.innerHTML;
-    console.log(task);
-    var output = new SpeechSynthesisUtterance("Heute stehen noch folgende Aufgaben an " + task);
-    output.lang = "de-DE";
-    speaker(output);
-}
-// Speak text
-function speaker(p_output) {
-    speechSynthesis.speak(p_output);
-}

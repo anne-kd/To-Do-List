@@ -55,10 +55,9 @@ function addTask() : void{
     remInput();
 
 
-    let DOMText = document.querySelectorAll<HTMLElement>(".task-text");
-    DOMText.forEach((element) => {
-    element.addEventListener("click", getOutput);
-    });
+    let DOMRead = document.querySelector("#read");
+    DOMRead.addEventListener("click", getOutput);
+    
 }
 
 DOMButton.addEventListener('click', addTask);
@@ -69,16 +68,37 @@ DOMInput.addEventListener("keyup",
         addTask();
         }
     });
+
 // VORLESEN
 function getOutput(event: Event) {
-    const element = event.target as HTMLElement;
-    let task = element.innerHTML;
-    console.log(task);
-    let output = new SpeechSynthesisUtterance(
-      `Heute stehen noch folgende Aufgaben an ${task}`
-    );
-    output.lang = "de-DE";
-    speaker(output);
+    const tasks = document.querySelectorAll<HTMLElement>(".task-text");
+
+
+    for (let i = 0; i < tasks.length; i++) {
+        const element = tasks[i];
+        let task = element.innerHTML;
+        let output;
+
+        if (element.classList.contains('line')){
+            task = "";
+        }
+
+        if (i == 0){
+            output = new SpeechSynthesisUtterance(
+                `Heute stehen noch folgende Aufgaben an: ${task}`
+              ); 
+        }
+        else{
+            output = new SpeechSynthesisUtterance(
+                `${task}`
+              );
+        }
+        
+        
+        output.lang = "de-DE";
+        output.pitch = 5;
+        speaker(output);
+    }
   }
   
   // Speak text
