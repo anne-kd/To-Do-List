@@ -19,13 +19,13 @@ var DOMInput = document.getElementById("listinput");
 var DOMList = document.querySelector(".list");
 var DOMButton = document.querySelector(".add-button");
 var a = 0;
+var html = "<li class=\"task\">\n    <div class=\"checkbox\" onclick=\"check(event)\"><span></span></div>\n    <div class=\"task-text\"> %text% </div>\n    <div class=\"timer\">\n        <div class=\"play\" onclick=\"start(event)\" ></div>\n        <div class=\"pause\" onclick=\"pause(event)\" ></div>\n        <div class=\"time\" id=\"%id%\">  </div>\n    </div>\n    <div class=\"remove-task\" onclick=\"removeTask(event)\"> <span></span> <span></span> </div>\n    </li>";
 function remInput() {
     return DOMInput.value = "";
 }
 function addTask() {
     var getInput = DOMInput.value;
     a++;
-    var html = "<li class=\"task\">\n    <div class=\"checkbox\" onclick=\"check(event)\"><span></span></div>\n    <div class=\"task-text\"> %text% </div>\n    <div class=\"timer\">\n        <div class=\"play\" onclick=\"start(event)\" ></div>\n        <div class=\"pause\" onclick=\"pause(event)\" ></div>\n        <div class=\"time\" id=\"%id%\">  </div>\n    </div>\n    <div class=\"remove-task\" onclick=\"removeTask(event)\"> <span></span> <span></span> </div>\n    </li>";
     html = html.replace('%text%', getInput);
     html = html.replace('%id%', "" + a);
     DOMList.insertAdjacentHTML("afterbegin", html);
@@ -43,12 +43,6 @@ DOMInput.addEventListener("keyup", function (event) {
 // VORLESEN
 function getOutput(event) {
     var tasks = document.querySelectorAll(".task-text");
-    if (tasks.length == 0) {
-        var output = new SpeechSynthesisUtterance("F\u00FCr heute stehen keine Aufgaben an.");
-        output.lang = "de-DE";
-        output.pitch = 5;
-        speaker(output);
-    }
     for (var i = 0; i < tasks.length; i++) {
         var element = tasks[i];
         var task = element.innerHTML;
@@ -67,7 +61,6 @@ function getOutput(event) {
         speaker(output);
     }
 }
-// Speak text
 function speaker(p_output) {
     speechSynthesis.speak(p_output);
 }
@@ -86,7 +79,7 @@ function check(event) {
 //LOESCHEN
 function removeTask(event) {
     var rem = event.target;
-    rem.parentNode.parentNode.parentNode.removeChild(rem.parentNode.parentNode);
+    rem.parentElement.parentElement.parentElement.removeChild(rem.parentElement.parentElement);
     //sorry xD
 }
 var newTimer = { stop: 1, hour: 0, min: 0, sec: 0 };

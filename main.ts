@@ -28,17 +28,7 @@ const DOMButton = document.querySelector(".add-button");
 
 let a = 0;
 
-
-
-function remInput() : string{
-    return DOMInput!.value = "";
-}
-
-function addTask() : void{
-    let getInput = DOMInput.value;
-    a++;
-
-    let html = `<li class="task">
+let html = `<li class="task">
     <div class="checkbox" onclick="check(event)"><span></span></div>
     <div class="task-text"> %text% </div>
     <div class="timer">
@@ -47,17 +37,23 @@ function addTask() : void{
         <div class="time" id="%id%">  </div>
     </div>
     <div class="remove-task" onclick="removeTask(event)"> <span></span> <span></span> </div>
-    </li>`;
+    </li>` as string;
+
+function remInput() : string{
+    return DOMInput!.value = "";
+}
+
+function addTask() : void{
+    let getInput = DOMInput.value;
+    a++;
     html = html.replace('%text%', getInput);
     html = html.replace('%id%', `${a}`);
     DOMList.insertAdjacentHTML("afterbegin", html);
     
     remInput();
 
-
     let DOMRead = document.querySelector("#read");
-    DOMRead.addEventListener("click", getOutput);
-    
+    DOMRead.addEventListener("click", getOutput); 
 }
 
 DOMButton.addEventListener('click', addTask);
@@ -99,12 +95,11 @@ function getOutput(event: Event) {
         output.pitch = 5;
         speaker(output);
     }
-  }
-  
-  // Speak text
-  function speaker(p_output: any) {
+}
+
+function speaker(p_output: any) {
     speechSynthesis.speak(p_output);
-  }
+}
   
 
 //ABHAKEN
@@ -122,7 +117,7 @@ function check(event : Event) : void {
 //LOESCHEN
 function removeTask(event : Event) : void {
     let rem = event.target as HTMLElement;
-    rem.parentNode.parentNode.parentNode.removeChild(rem.parentNode.parentNode);
+    rem.parentElement.parentElement.parentElement.removeChild(rem.parentElement.parentElement);
     //sorry xD
 }
 
@@ -132,7 +127,6 @@ interface ITimer {
     hour: number;
     min: number;
     sec: number;
-    id?: string;
 } 
 let newTimer : ITimer = {stop: 1, hour: 0, min: 0, sec: 0};
 let id : string;
@@ -155,6 +149,7 @@ function start(event : Event) : string {
     id = DOMTimer.getAttribute("id") as string ;
 
     styleTag(DOMStart, DOMPause);
+    
     if (idArray.some(el => el === id)){
         setTime(DOMTimer);
     }
