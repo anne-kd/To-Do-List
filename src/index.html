@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <title>To-Do-Liste</title>
+    </head>
+
+    <body>
+        <div id="bg">
+            <div id="date">
+                <span id="date-weekday"></span>
+                <span id="date-day"></span>
+                <span id="date-month"></span>
+            </div>
+
+            <div id="list-container">
+                <div id="input-container">
+                    <input class="input" id="listinput" type="text" placeholder="Gebe hier deine Aufgabe ein" value="">
+                    <div class="add-button">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div id="task-container">
+                    <ul class="list">
+                        <!-- <li class="task">
+                            <div class="checkbox" onclick="check(event)"><span></span></div>
+                            <div class="task-text">TEST</div>
+                            <div class="timer">
+                                <div class="play"></div>
+                                <div class="pause"></div>
+                                <div class="time"> <span class="hour">00</span>:<span class="min">00</span>:<span class="sec">00</span></div>
+                            </div>
+                            <div class="remove-task"> <span></span> <span></span> </div>
+                        </li> -->
+                    </ul>
+                </div>
+                <div id="read">
+                    <p>read tasks</p>
+                </div>
+            </div>
+        </div>
+
+        <script src="../lib/index.js"></script>
+    </body>
+</html>
